@@ -1,32 +1,36 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>HiQ | Time to go</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Time to go">
+	
+	<link rel="apple-touch-icon-precomposed" href="Images/apple-touch-icon-precomposed.png?v=3">
+	<link rel="shortcut icon" type="image/x-icon" href="Images/favicon.ico?v=1">
+	
+	@Styles.Render("~/Content/css")
 </head>
 <body>
-    <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a href="~/">ASP.NET Web API</a></p>
-            </div>
-            <div class="float-right">
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+	<a href="http://www.hiq.se" id="logo" target="_blank"><img src="Images/hiq.svg?v=1"></a>
+	
+	<section id="container" class="wrap clearfix in" role="main"></section>
+	
+	<div id="map-canvas"></div>
+	
+	<div id="loader"></div>
+	
+	<!--@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
+	@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)-->
+	
     @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+	<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrIx1SS3Y5eoEshju92DqixdagdYEjRXk">-->
+    @Scripts.Render("~/bundles/scripts")
 </body>
 </html>
