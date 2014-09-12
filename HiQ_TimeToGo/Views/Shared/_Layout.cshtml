@@ -16,17 +16,9 @@
 	
 	@Styles.Render("~/Content/css")
 </head>
-<body>
-	<a href="http://www.hiq.se" id="logo" target="_blank"><img src="Images/hiq.svg?v=1"></a>
-	
-	<section id="container" class="wrap clearfix in" role="main"></section>
-	
-	<div id="map-canvas"></div>
-	
-	<div id="loader"></div>
-	
-	<!--@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
-	@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)-->
+<body>	
+	@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
+	@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)
 	
     @RenderBody()
 
