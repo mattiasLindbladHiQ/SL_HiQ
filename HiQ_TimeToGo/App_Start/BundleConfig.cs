@@ -9,7 +9,7 @@ namespace HiQ_TimeToGo
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery-{version}.min.js",
                 "~/Scripts/settings.js",
                 "~/Scripts/mockResponse.js",
                 "~/Scripts/app.js"));
