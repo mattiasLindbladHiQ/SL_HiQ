@@ -1,0 +1,35 @@
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+	clear: both;
+	content: "\0020";
+	float: none !important;
+	display: block;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	*zoom: 1;
+}
+
+.clear { clear: both; }
+
+@media only screen and (min-width : 571px) {
+	/* Tablet */
+}
+
+@media only screen and (min-width : 1025px) {
+	/* Desktop */
+}
+
+@media only screen and (min-width : 1441px) {
+	/* Large screens */
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+    /* Retina */
+}
