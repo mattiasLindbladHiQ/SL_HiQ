@@ -7,8 +7,8 @@ HiQ.App = (function () {
 		firstAnimation = true,
 		animationSpeed = 700,
 		interval = setInterval(function () {
-			//initRequest();
-			initFakeRequest();
+			initRequest();
+			//initFakeRequest();
 		}, 30000);
 	
 	var getPosition = function () {
@@ -229,12 +229,12 @@ HiQ.App = (function () {
     return {
         'init': function () {
         
-        	checkLocation();
+        	//checkLocation();
 
             // Init all functionality
             if (timeSpanAllowsUpdate()) {
-				//initRequest();
-				initFakeRequest();
+				initRequest();
+				//initFakeRequest();
 			} else {
 				clearInterval(interval);
 			}

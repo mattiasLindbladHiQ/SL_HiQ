@@ -17,12 +17,13 @@
 	@Styles.Render("~/Content/css")
 </head>
 <body>	
-	@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
-	@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)
 	
     @RenderBody()
 
 	<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrIx1SS3Y5eoEshju92DqixdagdYEjRXk">-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/Scripts/plugins/jquery-2.1.1.min.js"><\/script>')</script>
+
     @Scripts.Render("~/bundles/scripts")
 </body>
 </html>
