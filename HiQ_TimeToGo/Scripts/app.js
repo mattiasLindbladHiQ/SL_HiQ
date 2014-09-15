@@ -24,8 +24,6 @@ HiQ.App = (function () {
 	};
 	
 	var initRequest = function () {
-		animateOut();
-	
 		var url = settings.url + '?key=' + settings.key + '&siteid=' + getPosition() + '&timewindow=' + getTime();
 	
 		setTimeout(function () {
@@ -39,6 +37,7 @@ HiQ.App = (function () {
 		        headers: { 'Access-Control-Allow-Origin': '*' },
 		        headers: { 'Access-Control-Allow-Methods': 'GET' },
 				success: function(data) {
+					animateOut();
 					updateContent(data.ResponseData);
 				},
 				error: function (arguments) {
