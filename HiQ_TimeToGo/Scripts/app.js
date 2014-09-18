@@ -25,30 +25,26 @@ HiQ.App = (function () {
 	
 	var initRequest = function () {
 		var url = settings.url + '?key=' + settings.key + '&siteid=' + getPosition() + '&timewindow=' + getTime();
-	
-		setTimeout(function () {
-			$.ajax({
-				type : "GET",
-				dataType: "json",
-				url: url,
-				xhrFields: { withCredentials: true },
-		        crossDomain: true,
-		        headers: { 'Access-Control-Allow-Credentials': true },
-		        headers: { 'Access-Control-Allow-Origin': '*' },
-		        headers: { 'Access-Control-Allow-Methods': 'GET' },
-				success: function(data) {
-					animateOut();
-					updateContent(data.ResponseData);
-				},
-				error: function (arguments) {
-					//console.log(arguments);
-				}
-			});
 		
-			//$.getJSON(url, function (data) {
-			//	updateContent(data.ResponseData);
-			//});
-		}, animationSpeed * 2);
+		$.ajax({
+			type : "GET",
+			dataType: "json",
+			url: url,
+			xhrFields: { withCredentials: true },
+	        crossDomain: true,
+	        headers: { 'Access-Control-Allow-Credentials': true },
+	        headers: { 'Access-Control-Allow-Origin': '*' },
+	        headers: { 'Access-Control-Allow-Methods': 'GET' },
+			success: function(data) {
+				animateOut();
+				setTimeout(function () {
+					updateContent(data.ResponseData);
+				}, animationSpeed * 2);
+			},
+			error: function (arguments) {
+				//console.log(arguments);
+			}
+		});
 	};
 	
 	var initFakeRequest = function () {
