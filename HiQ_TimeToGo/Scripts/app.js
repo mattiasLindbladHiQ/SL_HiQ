@@ -211,10 +211,11 @@ HiQ.App = (function () {
 	};
 	
 	var showLocation = function (position) {
-		var lat = position.coords.latitude;
-		var lng = position.coords.longitude;
+		var mapCanvas = document.getElementById('map-canvas'),
+			lat = position.coords.latitude,
+			lng = position.coords.longitude;
 		
-		var map = new google.maps.Map(document.getElementById('map-canvas'), {
+		var map = new google.maps.Map(mapCanvas, {
 			zoom: 17,
 			center: new google.maps.LatLng(lat, lng),
 			disableDefaultUI: true,
@@ -223,7 +224,7 @@ HiQ.App = (function () {
 			scaleControl: false
 		});
 		
-		$('#map-canvas').addClass('ready');
+		mapCanvas.addClass('ready');
 	};
 
     return {
