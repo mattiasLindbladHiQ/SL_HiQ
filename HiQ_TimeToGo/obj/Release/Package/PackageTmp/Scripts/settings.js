@@ -1,6 +1,6 @@
 var settings = {
 	"key": "2be910116fae4e77968777bad9c6314a",
-	"url": "http://api.sl.se/api2/realtimedepartures.json",
+	"url": "http://slhelper.azurewebsites.net/SL/getSlData",
 	"update_interval_minutes": "1",
 	"search_range_minutes": "10",
 	"days_running": [1,2,3,4,5],
