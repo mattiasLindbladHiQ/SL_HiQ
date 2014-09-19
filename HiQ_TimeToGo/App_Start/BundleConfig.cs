@@ -15,7 +15,7 @@ namespace HiQ_TimeToGo
                 "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-            	"~/Content/plugins/normalize.css",
+            	"~/Content/normalize.css",
             	"~/Content/helpers.css",
             	"~/Content/base.css"));
         }
