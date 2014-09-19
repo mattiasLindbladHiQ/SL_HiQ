@@ -12,7 +12,8 @@ HiQ.App = (function () {
 			} else {
 				initRequest();
 			}
-		}, 30000);
+		}, 30000),
+		list = [];
 
 	var timeSpanAllowsUpdate = function () {
 		var d = new Date(),
@@ -46,7 +47,17 @@ HiQ.App = (function () {
 				xhrFields: { withCredentials: true },
 		        crossDomain: true,
 				success: function (data) {
-					updateContent(data.ResponseData, j);
+					updateContent(data.ResponseData, j, list);
+					
+					if (j == settings.site_ids.length) {
+						list.sort(function (a, b) {
+							return parseInt(a.departureTime) > parseInt(b.departureTime);
+						});
+						
+						for (var i = 0; i < list.length; i++) {
+							populateContent(list[i].destination, list[i].departureTime, list[i].icon, list[i].from, list[i].j);
+						}
+					}
 				}
 			});
 		}
@@ -58,19 +69,27 @@ HiQ.App = (function () {
 		var data = mockResponse;
 		
 		setTimeout(function () {
-			updateContent(data.ResponseData, settings.site_ids.length);
+			updateContent(data.ResponseData, settings.site_ids.length, list);
+			
+			list.sort(function (a, b) {
+				return parseInt(a.departureTime) > parseInt(b.departureTime);
+			});
+			
+			for (var i = 0; i < list.length; i++) {
+				populateContent(list[i].destination, list[i].departureTime, list[i].icon, list[i].from, list[i].j);
+			}
 		}, animationSpeed * 2);
 	};
 	
-	var updateContent = function (response, j) {
-		updateContentFromLines(response.Metros, settings.metros, j);
-		updateContentFromLines(response.Buses, settings.busses, j);
-		updateContentFromLines(response.Trains, settings.trains, j);
-		updateContentFromLines(response.Trams, settings.trams, j);
-		updateContentFromLines(response.Ships, settings.ships, j);
+	var updateContent = function (response, j, list) {
+		updateContentFromLines(response.Metros, settings.metros, j, list);
+		updateContentFromLines(response.Buses, settings.busses, j, list);
+		updateContentFromLines(response.Trains, settings.trains, j, list);
+		updateContentFromLines(response.Trams, settings.trams, j, list);
+		updateContentFromLines(response.Ships, settings.ships, j, list);
 	};
 	
-	var updateContentFromLines = function (data, lines, j) {
+	var updateContentFromLines = function (data, lines, j, list) {
 
 		if (lines.length == 0) {
 			return;
@@ -112,7 +131,14 @@ HiQ.App = (function () {
 					}
 					
 					if (populate) {
-						populateContent(destination, departureTime, icon, from, j);					
+						list.push({
+							"destination": destination,
+							"departureTime": departureTime,
+							"icon": icon,
+							"from": from,
+							"j": j
+						});
+						//populateContent(destination, departureTime, icon, from, j);
 					}										
 				}
 			}
@@ -144,10 +170,17 @@ HiQ.App = (function () {
 	};
 	
 	var populateContent = function (destination, departureTime, icon, from, j) {
-		container.append('<div class="departure"><div class="icon ' + icon + '"></div><span class="destination">' + destination + '</span><span class="time">' + departureTime + '</span><span class="from">Avgång från: ' + from + '</span></div>');
-		
-		if (j == settings.site_ids.length) {
-			animateIn();
+		if (departureTime.indexOf('min') > 0) {
+			var list = {};
+			
+			var departureNr = departureTime.replace(' min', '');
+			var code = '<div class="departure" data-time="' + departureNr + '"><div class="icon ' + icon + '"></div><span class="destination">' + destination + '</span><span class="time">' + departureTime + '</span><span class="from">Avgång från: ' + from + '</span></div>';
+			
+			container.append(code);
+			
+			if (j == settings.site_ids.length) {
+				animateIn();
+			}
 		}
 	};
 	
@@ -170,6 +203,7 @@ HiQ.App = (function () {
 	
 	var resetContent = function () {
 		container.empty().addClass('in').removeClass('out');
+		list = [];
 	};
 	
 	var hideLoader = function () {
