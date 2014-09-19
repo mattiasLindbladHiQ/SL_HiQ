@@ -7,8 +7,11 @@ HiQ.App = (function () {
 		firstAnimation = true,
 		animationSpeed = 700,
 		interval = setInterval(function () {
-			initRequest();
-			//initFakeRequest();
+			if (location.protocol == 'file:') {
+				initFakeRequest();
+			} else {
+				initRequest();
+			}
 		}, 30000);
 	
 	var getPosition = function () {
@@ -228,8 +231,11 @@ HiQ.App = (function () {
 
             // Init all functionality
             if (timeSpanAllowsUpdate()) {
-				initRequest();
-				//initFakeRequest();
+				if (location.protocol == 'file:') {
+					initFakeRequest();
+				} else {
+					initRequest();
+				}
 			} else {
 				clearInterval(interval);
 			}
