@@ -1,0 +1,12 @@
+diff a/HiQ_TimeToGo/Scripts/app.js b/HiQ_TimeToGo/Scripts/app.js	(rejected hunks)
+@@ -36,8 +36,8 @@
+ 	var initRequest = function () {
+ 		animateOut();
+ 		
+-		for (var i = 0; i < settings.site_ids.length; i++) {
+-			var url = settings.url + '?key=' + settings.key + '&siteid=' + settings.site_ids[i] + '&timewindow=' + settings.search_range_minutes;
++		for (var j = 0; j < settings.site_ids.length; j++) {
++			var url = settings.url + '?key=' + settings.key + '&siteid=' + settings.site_ids[j] + '&timewindow=' + settings.search_range_minutes;
+ 			
+ 			$.ajax({
+ 				type : "GET",
