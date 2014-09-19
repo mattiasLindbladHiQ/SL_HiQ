@@ -42,19 +42,12 @@ HiQ.App = (function () {
 			url: url,
 			xhrFields: { withCredentials: true },
 	        crossDomain: true,
-	        headers: { 'Access-Control-Allow-Credentials': true },
-	        headers: { 'Access-Control-Allow-Origin': '*' },
-	        headers: { 'Access-Control-Allow-Methods': 'GET' },
 			success: function(data) {
 				animateOut();
 				
 				setTimeout(function () {
 					updateContent(data.ResponseData);
 				}, animationSpeed * 2);
-			},
-			error: function (arguments) {
-				// If the request fails, try again
-				initRequest();
 			}
 		});
 	};
