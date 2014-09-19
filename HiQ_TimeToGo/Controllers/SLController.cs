@@ -19,12 +19,9 @@ namespace HiQ_TimeToGo.Controllers
             return View();
         }
 
-        public string getSLData()
+        public string getSLData(string key, string siteId, string timeInMinutes)
         {
             string format = "json";
-            string key = "2be910116fae4e77968777bad9c6314a";
-            string siteId = "1002";
-            string timeInMinutes = "20";
             string url = "http://api.sl.se/api2/realtimedepartures." + format + "?key=" + key + "&siteid=" + siteId + "&timewindow=" + timeInMinutes + "";
 
             var syncClient = new WebClient();

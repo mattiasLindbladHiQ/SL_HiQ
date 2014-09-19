@@ -42,9 +42,9 @@ HiQ.App = (function () {
 			url: url,
 			xhrFields: { withCredentials: true },
 	        crossDomain: true,
-	        headers: { 'Access-Control-Allow-Credentials': true },
-	        headers: { 'Access-Control-Allow-Origin': '*' },
-	        headers: { 'Access-Control-Allow-Methods': 'GET' },
+	        //headers: { 'Access-Control-Allow-Credentials': true },
+	        //headers: { 'Access-Control-Allow-Origin': '*' },
+	        //headers: { 'Access-Control-Allow-Methods': 'GET' },
 			success: function(data) {
 				animateOut();
 				
@@ -54,7 +54,7 @@ HiQ.App = (function () {
 			},
 			error: function (arguments) {
 				// If the request fails, try again
-				initRequest();
+				//initRequest();
 			}
 		});
 	};
@@ -105,7 +105,6 @@ HiQ.App = (function () {
 				GroupOfLine = $this.GroupOfLine,
 				icon = getIcon(lineNumber, transportMode, GroupOfLine);			
 
-			//testa detta.
 			for (var l = 0; l < lines.length; l++) {
 				if (lineNumber == lines[l]) {
 					var populate = true,

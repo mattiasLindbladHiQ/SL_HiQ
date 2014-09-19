@@ -7,60 +7,12 @@ HiQ.App = (function () {
 		firstAnimation = true,
 		animationSpeed = 700,
 		interval = setInterval(function () {
-			//initRequest();
-			initFakeRequest();
+			if (location.protocol == 'file:') {
+				initFakeRequest();
+			} else {
+				initRequest();
+			}
 		}, 30000);
-	
-	var getPosition = function () {
-		var position = '1002';
-	
-		return position;
-	};
-	
-	var getTime = function () {	
-		var time = settings.search_range_minutes;
-	
-		return time;
-	};
-	
-	var initRequest = function () {
-		animateOut();
-	
-		var url = "http://localhost:49451/SL/getSlData";//settings.url + '?key=' + settings.key + '&siteid=' + getPosition() + '&timewindow=' + getTime();
-	
-		setTimeout(function () {
-			$.ajax({
-				type : "GET",
-				dataType: "json",
-				url: url,
-				xhrFields: { withCredentials: true },
-		        crossDomain: true,
-		        headers: { 'Access-Control-Allow-Credentials': true },
-		        headers: { 'Access-Control-Allow-Origin': '*' },
-		        headers: { 'Access-Control-Allow-Methods': 'GET' },
-				success: function(data) {
-					updateContent(data.ResponseData);
-				},
-				error: function (arguments) {
-					//console.log(arguments);
-				}
-			});
-		
-			//$.getJSON(url, function (data) {
-			//	updateContent(data.ResponseData);
-			//});
-		}, animationSpeed * 2);
-	};
-	
-	var initFakeRequest = function () {
-		animateOut();
-	
-		var data = mockResponse;
-		
-		setTimeout(function () {
-			updateContent(data.ResponseData);
-		}, animationSpeed * 2);
-	};
 
 	var timeSpanAllowsUpdate = function () {
 		var d = new Date(),
@@ -79,6 +31,54 @@ HiQ.App = (function () {
 		}
 		
 		return (hour >= from && hour <= to)
+	};
+	
+	var initRequest = function () {
+		var url = settings.url + '?key=' + settings.key + '&siteid=' + getPosition() + '&timewindow=' + getTime();
+		
+		$.ajax({
+			type : "GET",
+			dataType: "json",
+			url: url,
+			xhrFields: { withCredentials: true },
+	        crossDomain: true,
+	        //headers: { 'Access-Control-Allow-Credentials': true },
+	        //headers: { 'Access-Control-Allow-Origin': '*' },
+	        //headers: { 'Access-Control-Allow-Methods': 'GET' },
+			success: function(data) {
+				animateOut();
+				
+				setTimeout(function () {
+					updateContent(data.ResponseData);
+				}, animationSpeed * 2);
+			},
+			error: function (arguments) {
+				// If the request fails, try again
+				//initRequest();
+			}
+		});
+	};
+	
+	var initFakeRequest = function () {
+		animateOut();
+	
+		var data = mockResponse;
+		
+		setTimeout(function () {
+			updateContent(data.ResponseData);
+		}, animationSpeed * 2);
+	};
+	
+	var getPosition = function () {
+		var position = '1002'; // Change to the site ID's
+	
+		return position;
+	};
+	
+	var getTime = function () {
+		var time = settings.search_range_minutes;
+	
+		return time;
 	};
 	
 	var updateContent = function (response) {
@@ -105,7 +105,6 @@ HiQ.App = (function () {
 				GroupOfLine = $this.GroupOfLine,
 				icon = getIcon(lineNumber, transportMode, GroupOfLine);			
 
-			//testa detta.
 			for (var l = 0; l < lines.length; l++) {
 				if (lineNumber == lines[l]) {
 					var populate = true,
@@ -211,10 +210,11 @@ HiQ.App = (function () {
 	};
 	
 	var showLocation = function (position) {
-		var lat = 59.3310301;//position.coords.latitude;
-		var lng = 18.068776;//position.coords.longitude;
+		var mapCanvas = document.getElementById('map-canvas'),
+			lat = position.coords.latitude,
+			lng = position.coords.longitude;
 		
-		var map = new google.maps.Map(document.getElementById('map-canvas'), {
+		var map = new google.maps.Map(mapCanvas, {
 			zoom: 17,
 			center: new google.maps.LatLng(lat, lng),
 			disableDefaultUI: true,
@@ -223,7 +223,7 @@ HiQ.App = (function () {
 			scaleControl: false
 		});
 		
-		$('#map-canvas').addClass('ready');
+		mapCanvas.addClass('ready');
 	};
 
     return {
@@ -233,8 +233,11 @@ HiQ.App = (function () {
 
             // Init all functionality
             if (timeSpanAllowsUpdate()) {
-				//initRequest();
-				initFakeRequest();
+				if (location.protocol == 'file:') {
+					initFakeRequest();
+				} else {
+					initRequest();
+				}
 			} else {
 				clearInterval(interval);
 			}
