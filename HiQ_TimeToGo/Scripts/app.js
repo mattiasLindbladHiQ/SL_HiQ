@@ -36,8 +36,8 @@ HiQ.App = (function () {
 	var initRequest = function () {
 		animateOut();
 		
-		for (var i = 0; i < settings.site_ids.length; i++) {
-			var url = settings.url + '?key=' + settings.key + '&siteid=' + settings.site_ids[i] + '&timewindow=' + settings.search_range_minutes;
+		for (var j = 0; j < settings.site_ids.length; j++) {
+			var url = settings.url + '?key=' + settings.key + '&siteid=' + settings.site_ids[j] + '&timewindow=' + settings.search_range_minutes;
 			
 			$.ajax({
 				type : "GET",
@@ -46,7 +46,7 @@ HiQ.App = (function () {
 				xhrFields: { withCredentials: true },
 		        crossDomain: true,
 				success: function (data) {
-					updateContent(data.ResponseData);
+					updateContent(data.ResponseData, j);
 				}
 			});
 		}
@@ -58,19 +58,19 @@ HiQ.App = (function () {
 		var data = mockResponse;
 		
 		setTimeout(function () {
-			updateContent(data.ResponseData);
+			updateContent(data.ResponseData, settings.site_ids.length);
 		}, animationSpeed * 2);
 	};
 	
-	var updateContent = function (response) {
-		updateContentFromLines(response.Metros, settings.metros);
-		updateContentFromLines(response.Buses, settings.busses);
-		updateContentFromLines(response.Trains, settings.trains);
-		updateContentFromLines(response.Trams, settings.trams);
-		updateContentFromLines(response.Ships, settings.ships);
+	var updateContent = function (response, j) {
+		updateContentFromLines(response.Metros, settings.metros, j);
+		updateContentFromLines(response.Buses, settings.busses, j);
+		updateContentFromLines(response.Trains, settings.trains, j);
+		updateContentFromLines(response.Trams, settings.trams, j);
+		updateContentFromLines(response.Ships, settings.ships, j);
 	};
 	
-	var updateContentFromLines = function (data, lines) {
+	var updateContentFromLines = function (data, lines, j) {
 
 		if (lines.length == 0) {
 			return;
@@ -112,7 +112,7 @@ HiQ.App = (function () {
 					}
 					
 					if (populate) {
-						populateContent(destination, departureTime, icon, from);					
+						populateContent(destination, departureTime, icon, from, j);					
 					}										
 				}
 			}
@@ -143,10 +143,12 @@ HiQ.App = (function () {
 		return icon;
 	};
 	
-	var populateContent = function (destination, departureTime, icon, from) {
+	var populateContent = function (destination, departureTime, icon, from, j) {
 		container.append('<div class="departure"><div class="icon ' + icon + '"></div><span class="destination">' + destination + '</span><span class="time">' + departureTime + '</span><span class="from">Avgång från: ' + from + '</span></div>');
 		
-		animateIn();
+		if (j == settings.site_ids.length) {
+			animateIn();
+		}
 	};
 	
 	var animateOut = function () {
