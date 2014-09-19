@@ -13,17 +13,24 @@ HiQ.App = (function () {
 				initRequest();
 			}
 		}, 30000);
-	
-	var getPosition = function () {
-		var position = '1002';
-	
-		return position;
-	};
-	
-	var getTime = function () {	
-		var time = settings.search_range_minutes;
-	
-		return time;
+
+	var timeSpanAllowsUpdate = function () {
+		var d = new Date(),
+			day = d.getUTCDay(),
+			hour = d.getHours(),
+			from = settings.hour_from,
+			to = settings.hour_to,
+			dayIsAccessible = false;
+			
+		for (var i = 0; i < settings.days_running.length; i++) {
+			dayIsAccessible = dayIsAccessible || settings.days_running[i] == day;
+		}
+
+		if (!dayIsAccessible) {
+			return false;
+		}
+		
+		return (hour >= from && hour <= to)
 	};
 	
 	var initRequest = function () {
@@ -59,24 +66,17 @@ HiQ.App = (function () {
 			updateContent(data.ResponseData);
 		}, animationSpeed * 2);
 	};
-
-	var timeSpanAllowsUpdate = function () {
-		var d = new Date(),
-			day = d.getUTCDay(),
-			hour = d.getHours(),
-			from = settings.hour_from,
-			to = settings.hour_to,
-			dayIsAccessible = false;
-			
-		for (var i = 0; i < settings.days_running.length; i++) {
-			dayIsAccessible = dayIsAccessible || settings.days_running[i] == day;
-		}
-
-		if (!dayIsAccessible) {
-			return false;
-		}
-		
-		return (hour >= from && hour <= to)
+	
+	var getPosition = function () {
+		var position = '1002';
+	
+		return position;
+	};
+	
+	var getTime = function () {
+		var time = settings.search_range_minutes;
+	
+		return time;
 	};
 	
 	var updateContent = function (response) {
