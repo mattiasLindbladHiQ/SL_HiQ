@@ -47,12 +47,14 @@ HiQ.App = (function () {
 	        headers: { 'Access-Control-Allow-Methods': 'GET' },
 			success: function(data) {
 				animateOut();
+				
 				setTimeout(function () {
 					updateContent(data.ResponseData);
 				}, animationSpeed * 2);
 			},
 			error: function (arguments) {
-				//console.log(arguments);
+				// If the request fails, try again
+				initRequest();
 			}
 		});
 	};
@@ -68,7 +70,7 @@ HiQ.App = (function () {
 	};
 	
 	var getPosition = function () {
-		var position = '1002';
+		var position = '1002'; // Change to the site ID's
 	
 		return position;
 	};
@@ -209,8 +211,8 @@ HiQ.App = (function () {
 	};
 	
 	var showLocation = function (position) {
-		var lat = 59.3310301;//position.coords.latitude;
-		var lng = 18.068776;//position.coords.longitude;
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
 		
 		var map = new google.maps.Map(document.getElementById('map-canvas'), {
 			zoom: 17,
