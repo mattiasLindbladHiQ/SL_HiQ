@@ -34,22 +34,22 @@ HiQ.App = (function () {
 	};
 	
 	var initRequest = function () {
-		var url = settings.url + '?key=' + settings.key + '&siteid=' + getPosition() + '&timewindow=' + getTime();
+		animateOut();
 		
-		$.ajax({
-			type : "GET",
-			dataType: "json",
-			url: url,
-			xhrFields: { withCredentials: true },
-	        crossDomain: true,
-			success: function(data) {
-				animateOut();
-				
-				setTimeout(function () {
+		for (var i = 0; i < settings.site_ids.length; i++) {
+			var url = settings.url + '?key=' + settings.key + '&siteid=' + settings.site_ids[i] + '&timewindow=' + settings.search_range_minutes;
+			
+			$.ajax({
+				type : "GET",
+				dataType: "json",
+				url: url,
+				xhrFields: { withCredentials: true },
+		        crossDomain: true,
+				success: function (data) {
 					updateContent(data.ResponseData);
-				}, animationSpeed * 2);
-			}
-		});
+				}
+			});
+		}
 	};
 	
 	var initFakeRequest = function () {
@@ -60,18 +60,6 @@ HiQ.App = (function () {
 		setTimeout(function () {
 			updateContent(data.ResponseData);
 		}, animationSpeed * 2);
-	};
-	
-	var getPosition = function () {
-		var position = '1002'; // Change to the site ID's
-	
-		return position;
-	};
-	
-	var getTime = function () {
-		var time = settings.search_range_minutes;
-	
-		return time;
 	};
 	
 	var updateContent = function (response) {
@@ -237,7 +225,20 @@ HiQ.App = (function () {
 			}
 			
 			refreshPage();
-						
+
+        },
+        'getSiteId': function (stop) {
+	        var url = 'https://api.sl.se/api2/typeahead.json?key=' + settings.site_id_key + '&searchstring=' + stop + '&stationsonly=true&maxresults=5';
+			
+			$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: url,
+				crossDomain: true,
+				success: function (data) {
+					console.log('SiteId for station "' + data.ResponseData[0].Name + '": ' + data.ResponseData[0].SiteId);
+				}
+			});
         }
 
     };
