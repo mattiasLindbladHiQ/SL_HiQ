@@ -12,6 +12,8 @@ namespace HiQ_TimeToGo
                 "~/Scripts/plugins/plugins.js",
                 "~/Scripts/settings.js",
                 "~/Scripts/mockResponse.js",
+                "~/Scripts/metro.js",
+                "~/Scripts/news.js",
                 "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

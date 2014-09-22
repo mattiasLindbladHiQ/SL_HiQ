@@ -19,11 +19,42 @@
 	<link rel="stylesheet" href="Content/base.css">
 </head>
 <body>
-	<a href="http://www.hiq.se" id="logo" target="_blank"><img src="Images/hiq.svg?v=1"></a>
+	<header>
+		<h1>Regeringsgatan 20</h1>
+	</header>
 	
-	<section id="container" class="wrap clearfix in" role="main"></section>
+	<section id="container" class="clearfix" role="main">
+		<div id="metro" class="col">
+			<h2>Kommande avgångar:</h2>
+			<div class="wrap"></div>
+		</div>
+		
+		<div id="companies" class="col">
+			<h2>Företag:</h2>
+			<ul>
+				<li><span class="floor">9</span><img src="Images/hiq.svg?v=1" alt="HiQ"></li>
+				<li><span class="floor">7</span><img src="Images/danowsky.png?v=1" alt="Danowsky &amp; Partners"></li>
+				<li><span class="floor">6</span><img src="Images/frank.png?v=1" alt="Frank Advokatbyrå"></li>
+				<li><span class="floor">2</span><img src="Images/vasakronan.svg?v=1" alt="Vasakronan"></li>
+				<li><span class="floor">2</span><img src="Images/detur.png?v=1" alt="Detur"></li>
+			</ul>
+		</div>
+		
+		<div id="news" class="col">
+			<h2>Husinfo:</h2>
+		</div>
+		
+		<div id="contact" class="col">
+			<h2>Vi som jobbar med huset:</h2>
+			Kundtjänst &amp; felanmälan
+			<br>
+			08-566 20 600
+		</div>
+	</section>
 	
-	<div id="map-canvas"></div>
+	<footer>
+		<a href="http://vasakronan.se" id="logo" target="_blank"><img src="Images/vasakronan.svg?v=1" alt="Vasakronan"></a>
+	</footer>
 	
 	<div id="loader"></div>
 
@@ -34,6 +65,9 @@
 	
 	<script src="Scripts/settings.js"></script>
 	<script src="Scripts/mockResponse.js"></script>
+	
+	<script src="Scripts/metro.js"></script>
+	<script src="Scripts/news.js"></script>
 	<script src="Scripts/app.js"></script>
 </body>
 </html>
