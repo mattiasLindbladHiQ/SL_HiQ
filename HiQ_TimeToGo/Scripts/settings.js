@@ -13,5 +13,7 @@ var settings = {
 	"trams":[],
 	"ships":[],	
 	"filter_close_departures_minutes": "2",
-	"site_id_key": "3e66f4af4746448c94b6bc43ee11f2b1"
+	"site_id_key": "3e66f4af4746448c94b6bc43ee11f2b1",
+	"lat": 59.3310910,
+	"lng": 18.0685760
 };

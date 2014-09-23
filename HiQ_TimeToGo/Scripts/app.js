@@ -22,8 +22,8 @@ HiQ.App = (function () {
 	};
 	
 	var locationError = function () {
-		var lat = 59.3310910,
-			lng = 18.0685760;
+		var lat = settings.lat,
+			lng = settings.lng;
 		
 		populateMap(lat, lng);
 	};

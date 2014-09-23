@@ -45,7 +45,7 @@ HiQ.Metro = (function () {
 				xhrFields: { withCredentials: true },
 		        crossDomain: true,
 				success: function (data) {
-					updateContent(data.ResponseData);
+					updateContent(data);
 				}
 			});
 		}
