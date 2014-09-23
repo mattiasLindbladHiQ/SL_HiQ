@@ -11,8 +11,7 @@ HiQ.Metro = (function () {
 			} else {
 				initRequest();
 			}
-		}, 3000000),
-		list = [];
+		}, 3000000);
 
 	var timeSpanAllowsUpdate = function () {
 		var d = new Date(),
@@ -46,17 +45,7 @@ HiQ.Metro = (function () {
 				xhrFields: { withCredentials: true },
 		        crossDomain: true,
 				success: function (data) {
-					updateContent(data.ResponseData, j, list);
-					
-					if (j == settings.site_ids.length) {
-						list.sort(function (a, b) {
-							return parseInt(a.departureTime) > parseInt(b.departureTime);
-						});
-						
-						for (var i = 0; i < list.length; i++) {
-							populateContent(list[i].destination, list[i].departureTime, list[i].icon, list[i].from, list[i].j);
-						}
-					}
+					updateContent(data.ResponseData);
 				}
 			});
 		}
@@ -68,33 +57,26 @@ HiQ.Metro = (function () {
 		var data = mockResponse;
 		
 		setTimeout(function () {
-			updateContent(data.ResponseData, settings.site_ids.length, list);
-			
-			list.sort(function (a, b) {
-				return parseInt(a.departureTime) > parseInt(b.departureTime);
-			});
-			
-			for (var i = 0; i < list.length; i++) {
-				populateContent(list[i].destination, list[i].departureTime, list[i].icon, list[i].from, list[i].j);
-			}
+			updateContent(data);
 		}, animationSpeed * 2);
 	};
 	
-	var updateContent = function (response, j, list) {
-		updateContentFromLines(response.Metros, settings.metros, j, list);
-		updateContentFromLines(response.Buses, settings.busses, j, list);
-		updateContentFromLines(response.Trains, settings.trains, j, list);
-		updateContentFromLines(response.Trams, settings.trams, j, list);
-		updateContentFromLines(response.Ships, settings.ships, j, list);
+	var updateContent = function (response) {
+		updateContentFromLines(response.Metros, settings.metros);
+		updateContentFromLines(response.Buses, settings.busses);
+		updateContentFromLines(response.Trains, settings.trains);
+		updateContentFromLines(response.Trams, settings.trams);
+		updateContentFromLines(response.Ships, settings.ships);
 	};
 	
-	var updateContentFromLines = function (data, lines, j, list) {
+	var updateContentFromLines = function (data, lines) {
 
 		if (lines.length == 0) {
 			return;
 		}
 
 		for (var i = 0; i < data.length; i++) {
+			
 			var $this = data[i],
 				from = $this.StopAreaName,
 				lineNumber = $this.LineNumber,
@@ -130,14 +112,7 @@ HiQ.Metro = (function () {
 					}
 					
 					if (populate) {
-						list.push({
-							"destination": destination,
-							"departureTime": departureTime,
-							"icon": icon,
-							"from": from,
-							"j": j
-						});
-						//populateContent(destination, departureTime, icon, from, j);
+						populateContent(destination, departureTime, icon, from);
 					}										
 				}
 			}
@@ -168,18 +143,13 @@ HiQ.Metro = (function () {
 		return icon;
 	};
 	
-	var populateContent = function (destination, departureTime, icon, from, j) {
+	var populateContent = function (destination, departureTime, icon, from) {
 		if (departureTime.indexOf('min') > 0) {
-			var list = {};
-			
-			var departureNr = departureTime.replace(' min', '');
-			var code = '<div class="departure" data-time="' + departureNr + '"><div class="icon ' + icon + '"></div><span class="destination">' + destination + '</span><span class="time">' + departureTime + '</span><span class="from">Avgång från: ' + from + '</span></div>';
+			var code = '<div class="departure"><div class="icon ' + icon + '"></div><span class="destination">' + destination + '</span><span class="time">' + departureTime + '</span><span class="from">Avgång från: ' + from + '</span></div>';
 			
 			context.append(code);
 			
-			if (j == settings.site_ids.length) {
-				animateIn();
-			}
+			animateIn();
 		}
 	};
 	
@@ -202,7 +172,6 @@ HiQ.Metro = (function () {
 	
 	var resetContent = function () {
 		context.empty().addClass('in').removeClass('out');
-		list = [];
 	};
 	
 	var refreshPage = function () {
@@ -228,19 +197,6 @@ HiQ.Metro = (function () {
 			
 			refreshPage();
 
-        },
-        'getSiteId': function (stop) {
-	        var url = 'https://api.sl.se/api2/typeahead.json?key=' + settings.site_id_key + '&searchstring=' + stop + '&stationsonly=true&maxresults=5';
-			
-			$.ajax({
-				type: "GET",
-				dataType: "json",
-				url: url,
-				crossDomain: true,
-				success: function (data) {
-					console.log('SiteId for station "' + data.ResponseData[0].Name + '": ' + data.ResponseData[0].SiteId);
-				}
-			});
         }
 
     };

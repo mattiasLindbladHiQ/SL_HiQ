@@ -16,16 +16,22 @@ html {
 body { height: 100%; }
 
 #container {
-	height: 80%;
+	height: 86%;
 	margin: 0 auto;
 	position: relative;
 	width: 100%;
 	z-index: 3;
 }
 
+
+	#metro,
+	#companies { height: 70%; }
+	
+	#news,
+	#contact { height: 30%; }
+	
 	#container .col {
 		float: left;
-		height: 50%;
 		padding: 20px;
 		width: 50%;
 	}
@@ -48,7 +54,6 @@ body { height: 100%; }
 	}
 
 	.departure {
-		border-bottom: 1px solid #ccc;
 		float: left;
 		position: relative;
 		-webkit-flex: 1 1 auto;
@@ -56,7 +61,11 @@ body { height: 100%; }
 		width: 100%;
 	}
 	
-		.departure:first-child { border-top: 1px solid #ccc; }
+	.departure,
+	#companies li { border-bottom: 1px solid #ccc; }
+	
+		.departure:first-child,
+		#companies li:first-child { border-top: 1px solid #ccc; }
 	
 		.departure > * {
 			float: left;
@@ -123,12 +132,13 @@ body { height: 100%; }
 		
 			#companies .floor { float: right; }
 		
-			#companies img { height: 20px; }
+			#companies img { height: 15px; }
 
 header,
 footer {
 	box-shadow: 0 0 15px 5px rgba(0, 0, 0, .02);
-	height: 10%;
+	height: 7%;
+	opacity: .7;
 }
 
 header,
